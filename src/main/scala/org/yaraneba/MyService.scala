@@ -1,6 +1,7 @@
 package org.yaraneba
 
 import akka.actor.Actor
+import org.yaraneba.model.TodoModel
 import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes._
 import spray.routing._
@@ -32,7 +33,7 @@ trait YaranebaService extends HttpService {
             validate(todo_title.nonEmpty && user_name.nonEmpty && description.length <= 2048 && deadline.length <= 10, s"Invalid Request") {
               respondWithMediaType(`application/json`) {
                 complete {
-                  val todo = "ddd"
+                  val todo = TodoModel.createTodo(todo_title, user_name, description, deadline)
                   "" + todo
                 }
               }
