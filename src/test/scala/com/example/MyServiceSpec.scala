@@ -1,6 +1,7 @@
 package com.example
 
 import org.specs2.mutable.Specification
+import org.yaraneba.MyService
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._

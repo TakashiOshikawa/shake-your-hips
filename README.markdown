@@ -1,49 +1,42 @@
-## _spray_ Template Project
+## Yaraneba
 
-This projects provides a starting point for your own _spray-routing_ endeavors.
-There are 8 branches, providing templates for _spray-routing_ on
+Make a TODO List with my Friend
 
-* _spray-can_, Scala 2.9 + Akka 2.0 + spray 1.0 (the `on_spray-can_1.0` branch)
-* _spray-can_, Scala 2.10 + Akka 2.1 + spray 1.1 (the `on_spray-can_1.1` branch)
-* _spray-can_, Scala 2.10 + Akka 2.2 + spray 1.2 (the `on_spray-can_1.2` branch)
-* _spray-can_, Scala 2.10 + Akka 2.3 + spray 1.3 (the `on_spray-can_1.3` branch)
-* _spray-can_, Scala 2.11 + Akka 2.3 + spray 1.3 (the `on_spray-can_1.3_scala-2.11` branch)
-* _Jetty_, Scala 2.9 + Akka 2.0 + spray 1.0 (the `on_jetty_1.0` branch)
-* _Jetty_, Scala 2.10 + Akka 2.1 + spray 1.1 (the `on_jetty_1.1` branch)
-* _Jetty_, Scala 2.10 + Akka 2.2 + spray 1.2 (the `on_jetty_1.2` branch)
-* _Jetty_, Scala 2.10 + Akka 2.3 + spray 1.3 (the `on_jetty_1.3` branch)
-* _Jetty_, Scala 2.11 + Akka 2.3 + spray 1.3 (the `on_jetty_1.3_scala-2.11` branch)
+create MySQL user scaler / scaler
+create Mac directory ~/various/scala_spray/
 
-You are currently on the `on_spray-can_1.3_scala-2.11` branch.
+0. move directory & create MySQL user
 
-Follow these steps to get started:
+        $ cd ~/various/scala_spray/
+        $ "mysql -u root -e "CREATE USER 'scaler' IDENTIFIED BY 'scaler';"
 
 1. Git-clone this repository.
 
-        $ git clone git://github.com/spray/spray-template.git my-project
+        $ git clone git://github.com/spray/spray-template.git todolist
 
 2. Change directory into your clone:
 
-        $ cd my-project
+        $ cd todolist
 
-3. Launch SBT:
+3. Setuo the database
+
+        $ runghc exe_yaraneba_scheme.hs
+
+4. Launch SBT:
 
         $ sbt
 
-4. Compile everything and run all tests:
+5. Compile everything and run all tests:
 
         > test
 
-5. Start the application:
+6. Start the application:
 
         > re-start
 
-6. Browse to [http://localhost:8080](http://localhost:8080/)
+7. Browse to [http://127.0.0.1:650001](http://127.0.0.1:650001/)
 
-7. Stop the application:
+8. Stop the application:
 
         > re-stop
 
-8. Learn more at http://www.spray.io/
-
-9. Start hacking on `src/main/scala/com/example/MyService.scala`
