@@ -11,7 +11,7 @@ object UserDAO extends DBAccess {
 
 
   // ユーザが存在するかチェック
-  def isExistUserID(user_name: String): List[User] = {
+  def findUserByUserName(user_name: String): List[User] = {
     DB readOnly { implicit session =>
       val user = sql"SELECT * FROM users WHERE user_name = ${user_name}"
         .map(UserTable.allColumn).list.apply()

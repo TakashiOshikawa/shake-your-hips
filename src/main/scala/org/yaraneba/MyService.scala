@@ -42,13 +42,13 @@ trait YaranebaService extends HttpService {
         }
       }
     } ~
-    path( "v1" / "todo" / "timeline" / IntNumber / IntNumber ) { (numb_of_articles, start_num) =>
+    path( "v1" / "todo" / "timeline" / IntNumber / IntNumber ) { (num_of_articles, start_num) =>
       get {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
-          validate(numb_of_articles > 0 && start_num > 0, s"Invalid Request!") {
+          validate(num_of_articles > 0 && start_num > 0, s"Invalid Request!") {
             respondWithMediaType(`application/json`) {
               complete {
-                val todos = "ddd"
+                val todos = TodoModel.getTodosSpecifiedNumber(num_of_articles, start_num)
                 "" + todos
               }
             }
