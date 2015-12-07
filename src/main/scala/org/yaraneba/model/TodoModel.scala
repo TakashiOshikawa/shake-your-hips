@@ -1,7 +1,7 @@
 package org.yaraneba.model
 
 import org.yaraneba.model.DAO.{TodoDAO, UserDAO}
-import org.yaraneba.model.table.{TodoResponse, TodoTable, User}
+import org.yaraneba.model.table.{TodoUpdateResponse, TodoResponse, TodoTable, User}
 import play.api.libs.json.{JsValue, Json}
 
 /**
@@ -40,7 +40,7 @@ object TodoModel extends TodoTable {
         todo_title,
         Option(description),
         todo.deadline,
-        todo.progres_status,
+        todo.progress_status,
         200
       )
     )
@@ -67,6 +67,23 @@ object TodoModel extends TodoTable {
     ls_todos_json
   }
 
+
+  /**
+   *  TODOの進行状況を更新するメソッド
+   *
+   *  @param todo_id          状態を変更したいTODOのID todosテーブルのtodo_id
+   *  @param progress_status  変更したい状態 ( 1: 未着手, 2: 進行中, 3: 完了)
+   *
+   *  @return                 JSON化されたTODOのcase class
+   */
+  def changeProgressStatus(todo_id: Long, progress_status: Int): JsValue = {
+
+    val updated_todo: TodoUpdateResponse = TodoDAO.updateProgressStatus(todo_id, progress_status)
+
+    val updated_todo_json: JsValue = Json.toJson( updated_todo )
+
+    updated_todo_json
+  }
 
 
 }

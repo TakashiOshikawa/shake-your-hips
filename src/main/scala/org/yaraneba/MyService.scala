@@ -55,5 +55,21 @@ trait YaranebaService extends HttpService {
           }
         }
       }
+    } ~
+    path( "v1" / "todo" / IntNumber / "progress" ) { todo_id =>
+      put {
+        respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
+          formFields('progress_status.as[Int]) { progress_status =>
+            validate(todo_id > 0 && (progress_status >= 1 &&  progress_status <= 3), s"Invalid Request!") {
+              respondWithMediaType(`application/json`) {
+                complete {
+                  val todo = TodoModel.changeProgressStatus(todo_id, progress_status)
+                  "" + todo
+                }
+              }
+            }
+          }
+        }
+      }
     }
 }

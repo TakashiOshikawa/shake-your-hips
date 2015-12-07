@@ -47,10 +47,26 @@ object TodoDAO extends DBAccess {
   def selectTodosBySpecifiedNumber(num_of_articles: Long, start_num: Long): List[TodoResponse] = {
 
     val todos = DB readOnly { implicit session =>
-      sql"SELECT todo_id, user_name, todo_title, description, deadline, progres_status, 200 as request_status FROM todos LEFT JOIN users USING (user_id) ORDER BY todo_id DESC LIMIT ${start_num-1}, ${num_of_articles}"
+      sql"SELECT todo_id, user_name, todo_title, description, deadline, progress_status, 200 as request_status FROM todos LEFT JOIN users USING (user_id) ORDER BY todo_id DESC LIMIT ${start_num-1}, ${num_of_articles}"
         .map(TodoTable.userJoinColumn).list.apply()
     }
     todos
+
+  }
+
+
+  /**
+   *
+   */
+  def updateProgressStatus(todo_id: Long, progress_status: Int): TodoUpdateResponse = {
+
+    DB localTx { implicit session =>
+      val update_todo_id =
+        sql"UPDATE todos SET progress_status = ${progress_status} WHERE todo_id = ${todo_id}"
+          .update().apply()
+
+      TodoUpdateResponse(todo_id, 200)
+    }
 
   }
 

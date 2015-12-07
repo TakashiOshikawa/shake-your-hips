@@ -18,6 +18,9 @@ trait TodoTable {
   implicit def jsonListTodosWrites = Json.writes[ListTodos]
   implicit def jsonListTodosReads  = Json.reads[ListTodos]
 
+  implicit def jsonTodoUpdateWrites = Json.writes[TodoUpdateResponse]
+  implicit def jsonTodoUpdateReads  = Json.reads[TodoUpdateResponse]
+
 }
 
 
@@ -28,7 +31,7 @@ case class Todo
     user_id: Long,
     description: Option[String] = None,
     deadline: DateTime,
-    progres_status: Int
+    progress_status: Int
   )
 
 
@@ -39,7 +42,7 @@ case class TodoResponse
     todo_title: String,
     description: Option[String] = None,
     deadline: DateTime,
-    progres_status: Int,
+    progress_status: Int,
     request_status: Int
   )
 
@@ -47,6 +50,13 @@ case class TodoResponse
 case class ListTodos
   (
     todos: List[TodoResponse]
+  )
+
+
+case class TodoUpdateResponse
+  (
+    todo_id: Long,
+    request_status: Int
   )
 
 
@@ -58,7 +68,7 @@ object TodoTable {
     user_id = res.long("user_id"),
     description = res.stringOpt("description"),
     deadline = res.jodaDateTime("deadline"),
-    progres_status = res.int("progres_status")
+    progress_status = res.int("progress_status")
   )
 
   val userJoinColumn = (res: WrappedResultSet) => TodoResponse(
@@ -67,7 +77,7 @@ object TodoTable {
     todo_title = res.string("todo_title"),
     description = res.stringOpt("description"),
     deadline = res.jodaDateTime("deadline"),
-    progres_status = res.int("progres_status"),
+    progress_status = res.int("progress_status"),
     request_status = res.int("request_status")
   )
 
