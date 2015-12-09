@@ -71,5 +71,19 @@ trait YaranebaService extends HttpService {
           }
         }
       }
+    } ~
+    path( "v1" / "todo" / IntNumber ) { todo_id =>
+      delete {
+        respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
+          validate(todo_id > 0, s"Invalid Request!") {
+            respondWithMediaType(`application/json`) {
+              complete {
+                val todo = TodoModel.deleteTodo(todo_id)
+                "" + todo
+              }
+            }
+          }
+        }
+      }
     }
 }

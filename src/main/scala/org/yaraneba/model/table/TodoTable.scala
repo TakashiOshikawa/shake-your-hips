@@ -18,8 +18,8 @@ trait TodoTable {
   implicit def jsonListTodosWrites = Json.writes[ListTodos]
   implicit def jsonListTodosReads  = Json.reads[ListTodos]
 
-  implicit def jsonTodoUpdateWrites = Json.writes[TodoUpdateResponse]
-  implicit def jsonTodoUpdateReads  = Json.reads[TodoUpdateResponse]
+  implicit def jsonTodoUpdateWrites = Json.writes[TodoModifyResponse]
+  implicit def jsonTodoUpdateReads  = Json.reads[TodoModifyResponse]
 
 }
 
@@ -53,7 +53,7 @@ case class ListTodos
   )
 
 
-case class TodoUpdateResponse
+case class TodoModifyResponse
   (
     todo_id: Long,
     request_status: Int

@@ -1,7 +1,7 @@
 package org.yaraneba.model
 
 import org.yaraneba.model.DAO.{TodoDAO, UserDAO}
-import org.yaraneba.model.table.{TodoUpdateResponse, TodoResponse, TodoTable, User}
+import org.yaraneba.model.table._
 import play.api.libs.json.{JsValue, Json}
 
 /**
@@ -78,11 +78,28 @@ object TodoModel extends TodoTable {
    */
   def changeProgressStatus(todo_id: Long, progress_status: Int): JsValue = {
 
-    val updated_todo: TodoUpdateResponse = TodoDAO.updateProgressStatus(todo_id, progress_status)
+    val updated_todo: TodoModifyResponse = TodoDAO.updateProgressStatus(todo_id, progress_status)
 
     val updated_todo_json: JsValue = Json.toJson( updated_todo )
 
     updated_todo_json
+  }
+
+
+  /**
+   *  TODOを削除するメソッド
+   *
+   *  @param todo_id  削除したいTODOのID
+   *
+   *  @return         JSON化されたTODOのIDとstatus codeのcase class
+   */
+   def deleteTodo(todo_id: Long): JsValue = {
+
+    val delete_todo: TodoModifyResponse = TodoDAO.deleteTodoByTodoID(todo_id)
+
+    val delete_todo_json: JsValue = Json.toJson( delete_todo )
+
+    delete_todo_json
   }
 
 

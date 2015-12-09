@@ -56,19 +56,45 @@ object TodoDAO extends DBAccess {
 
 
   /**
+   *  TODOの状態をUPDATEするメソッド
    *
+   *  @param todo_id          進捗状況を更新したいTODOのID
+   *  @param progress_status  TODOの進捗状態
+   *
+   *  @return                 TODOのIDとstatus codeを持つcase class
    */
-  def updateProgressStatus(todo_id: Long, progress_status: Int): TodoUpdateResponse = {
+  def updateProgressStatus(todo_id: Long, progress_status: Int): TodoModifyResponse = {
 
     DB localTx { implicit session =>
       val update_todo_id =
         sql"UPDATE todos SET progress_status = ${progress_status} WHERE todo_id = ${todo_id}"
           .update().apply()
 
-      TodoUpdateResponse(todo_id, 200)
+      TodoModifyResponse(todo_id, 200)
     }
 
   }
+
+
+  /**
+   *   TODOをtodosテーブルから削除するメソッド
+   *
+   *   @param todo_id  削除したいTODOのID
+   *
+   *   @return         TODOのIDとstatus codeを持つcase class
+   */
+  def deleteTodoByTodoID(todo_id: Long): TodoModifyResponse = {
+
+    DB localTx { implicit session =>
+      val update_todo_id =
+        sql"DELETE FROM todos WHERE todo_id = ${todo_id}"
+          .update().apply()
+
+      TodoModifyResponse(todo_id, 200)
+    }
+
+  }
+
 
 
 }
