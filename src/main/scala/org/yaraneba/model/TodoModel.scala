@@ -36,7 +36,7 @@ object TodoModel extends TodoTable {
     val todo_json = Json.toJson(
       TodoResponse(
         todo.todo_id,
-        user.headOption.get.user_name,
+        posted_user_name,
         todo_title,
         Option(description),
         todo.deadline,

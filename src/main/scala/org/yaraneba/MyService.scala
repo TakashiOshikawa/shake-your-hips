@@ -25,7 +25,7 @@ class YaranebaServiceActor extends Actor with YaranebaService {
 trait YaranebaService extends HttpService {
 
   val yaraneba =
-    path( "v1" / "todo" / "create" ) {
+    path( "v1" / "todos" ) {
       post {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
           formFields('todo_title, 'user_name, 'description, 'deadline) {
@@ -42,7 +42,7 @@ trait YaranebaService extends HttpService {
         }
       }
     } ~
-    path( "v1" / "todo" / "timeline" / IntNumber / IntNumber ) { (num_of_articles, start_num) =>
+    path( "v1" / "todos" / IntNumber / IntNumber ) { (num_of_articles, start_num) =>
       get {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
           validate(num_of_articles > 0 && start_num > 0, s"Invalid Request!") {
@@ -56,7 +56,7 @@ trait YaranebaService extends HttpService {
         }
       }
     } ~
-    path( "v1" / "todo" / IntNumber / "progress" ) { todo_id =>
+    path( "v1" / "todos" / IntNumber ) { todo_id =>
       put {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
           formFields('progress_status.as[Int]) { progress_status =>
@@ -72,7 +72,7 @@ trait YaranebaService extends HttpService {
         }
       }
     } ~
-    path( "v1" / "todo" / IntNumber ) { todo_id =>
+    path( "v1" / "todos" / IntNumber ) { todo_id =>
       delete {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
           validate(todo_id > 0, s"Invalid Request!") {
