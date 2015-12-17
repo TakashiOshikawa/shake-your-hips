@@ -56,7 +56,7 @@ trait YaranebaService extends HttpService {
         }
       }
     } ~
-    path( "v1" / "todos" / IntNumber ) { todo_id =>
+    path( "v1" / "todos" / IntNumber / "progress" ) { todo_id =>
       put {
         respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
           formFields('progress_status.as[Int]) { progress_status =>
@@ -80,6 +80,22 @@ trait YaranebaService extends HttpService {
               complete {
                 val todo = TodoModel.deleteTodo(todo_id)
                 "" + todo
+              }
+            }
+          }
+        }
+      }
+    } ~
+    path( "v1" / "todos" / IntNumber / "contents" ) { todo_id =>
+      put {
+        respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
+          formFields('todo_title, 'description, 'deadline) { (todo_title: String, description: String, deadline: String) =>
+            validate(todo_id > 0, s"Invalid Request!") {
+              respondWithMediaType(`application/json`) {
+                complete {
+                  val todo = TodoModel.changeTodoContents(todo_id, todo_title, description, deadline)
+                  "" + todo
+                }
               }
             }
           }

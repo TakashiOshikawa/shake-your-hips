@@ -103,4 +103,29 @@ object TodoModel extends TodoTable {
   }
 
 
+  /**
+    *  TODOの内容を変更するメソッド
+    *
+    *  @param  todo_id      内容を変更したいTODOのID
+    *  @param  todo_title   変更後のタイトル
+    *  @param  description  TODOの説明文
+    *  @param  deadline     締切日の設定
+    *
+    *  @return JSON化されたTODOのIDとstatus code
+    */
+  def changeTodoContents(todo_id: Long, todo_title: String, description: String, deadline: String): JsValue = {
+
+    val opt_deadline: Option[String] = deadline match {
+      case "" => None
+      case _  => Some(deadline)
+    }
+
+    val updated_todo: TodoContentsModifyResponse = TodoDAO.updateTodoContents(todo_id, todo_title, description, opt_deadline)
+
+    val updated_todo_json: JsValue = Json.toJson( updated_todo )
+
+    updated_todo_json
+  }
+
+
 }

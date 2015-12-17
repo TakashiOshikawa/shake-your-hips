@@ -96,5 +96,28 @@ object TodoDAO extends DBAccess {
   }
 
 
+  /**
+    *  TODOの内容をtodosテーブルから変更するメソッド
+    *
+    *  @param  todo_id      内容を変更したいTODOのID
+    *  @param  todo_title   変更後のタイトル
+    *  @param  description  TODOの説明文
+    *  @param  deadline     締切日の設定
+    *
+    *  @return              TODOのIDとstatus codeを持つcase class
+    */
+  def updateTodoContents(todo_id: Long, todo_title: String, description: String, deadline: Option[String]): TodoContentsModifyResponse = {
+
+    DB localTx { implicit session =>
+      val update_todo =
+        sql"UPDATE todos SET todo_title = ${todo_title}, description = ${description}, deadline = ${deadline.getOrElse(DateTime.now().toString("yyyy-MM-dd HH:mm:ss"))} WHERE todo_id = ${todo_id}"
+          .update().apply()
+
+      TodoContentsModifyResponse(todo_id, todo_title, description, DateTime.parse(deadline.getOrElse(DateTime.now().toString)), 200)
+    }
+
+  }
+
+
 
 }
