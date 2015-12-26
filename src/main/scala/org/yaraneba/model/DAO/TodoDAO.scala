@@ -119,5 +119,4 @@ object TodoDAO extends DBAccess {
   }
 
 
-
 }
