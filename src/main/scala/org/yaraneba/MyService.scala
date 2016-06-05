@@ -1,7 +1,7 @@
 package org.yaraneba
 
 import akka.actor.Actor
-import org.yaraneba.model.TodoModel
+import org.yaraneba.model.{TodoModel, TestModel}
 import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes._
 import spray.routing._
@@ -97,6 +97,19 @@ trait YaranebaService extends HttpService {
                   "" + todo
                 }
               }
+            }
+          }
+        }
+      }
+    } ~
+    path( "v1" / "test" / "articles" ) {
+      get {
+        respondWithHeader(RawHeader("Access-Control-Allow-Origin", "*")) {
+          respondWithMediaType(`application/json`) {
+            complete {
+              // val todo = TodoModel.changeTodoContents(todo_id, todo_title, description, deadline)
+              val todo = TestModel.getArtiles()
+              "" + todo
             }
           }
         }
